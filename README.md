@@ -1,10 +1,20 @@
+# 🧠 AltCreditScoreAI
 
-## Features
-- Modular design with preprocessing, feature engineering, and model training
-- Explainable AI using SHAP and LIME
-- CI/CD with GitHub Actions and Docker
-- Bilingual documentation (English/Persian)
-- Designed for global deployment and migration portfolio (NIW/NIV)
+AI-powered credit scoring for individuals without formal banking history. Built for global fintech, migration portfolios, and scalable deployment.
+
+## 🚀 Features
+
+- ✅ Secure preprocessing and feature engineering
+- ✅ Model training with Logistic Regression, XGBoost, LightGBM
+- ✅ Evaluation with ROC, F1, Precision-Recall, Confusion Matrix
+- ✅ CI/CD pipeline with GitHub Actions (test, lint, security)
+- ✅ Dockerized for isolated execution
+
+## 🐳 Run with Docker
+
+```bash
+docker build -t altcredit-ai .
+docker run -it altcredit-ai pytest tests/
 
 ## Getting Started
 ```bash
