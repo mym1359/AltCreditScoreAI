@@ -13,6 +13,7 @@ h11==0.16.0
 idna==3.10
 iniconfig==2.1.0
 joblib==1.5.2
+lightgbm==4.6.0
 loguru==0.7.3
 markdown-it-py==4.0.0
 mccabe==0.7.0
@@ -44,3 +45,4 @@ tzdata==2025.2
 urllib3==2.5.0
 uvicorn==0.37.0
 win32_setctime==1.2.0
+xgboost==3.0.5
