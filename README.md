@@ -30,4 +30,4 @@ source venv/bin/activate  # در ویندوز: venv\Scripts\activate
 pip install pandas numpy scikit-learn xgboost lightgbm matplotlib seaborn loguru pydantic pytest
 
 # ذخیره در requirements.txt
-pip freeze > requirements.txt
+pip freeze > requirements.txt 
