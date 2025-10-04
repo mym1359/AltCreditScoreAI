@@ -1,9 +1,9 @@
 name: Daily Commit
 
 on:
-  workflow_dispatch:  # ← اجرای دستی
+  workflow_dispatch:  # اجرای دستی با دکمه Run
   schedule:
-    - cron: '0 6 * * *'  # ← اجرای روزانه
+    - cron: '0 6 * * *'  # اجرای روزانه ساعت ۶ صبح UTC
 
 jobs:
   commit:
@@ -17,9 +17,18 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
-      - name: Make dummy commit
+      - name: Create daily file
         run: |
           date > daily.txt
-          git add daily.txt
-          git commit -m "Daily commit: $(date)"
-          git push
+
+      - name: Commit changes
+        run: |
+          git add -f daily.txt
+          git commit -m "Daily commit: $(date)" || echo "No changes to commit"
+
+      - name: Push changes
+        env:
+          TOKEN: ${{ secrets.PERSONAL_TOKEN }}
+        run: |
+          git remote set-url origin https://mym1359:${TOKEN}@github.com/mym1359/banking_credit_scoring.git
+          git push origin HEAD:main
