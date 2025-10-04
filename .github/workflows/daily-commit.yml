@@ -1,7 +1,7 @@
 name: Daily Commit
 
 on:
-  workflow_dispatch:
+  workflow_dispatch:  # ← فعال‌سازی اجرای دستی
   schedule:
     - cron: '0 6 * * *'
 
