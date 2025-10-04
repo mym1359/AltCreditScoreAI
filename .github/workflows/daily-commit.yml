@@ -29,4 +29,4 @@ jobs:
 
       - name: Push changes using PAT
         run: |
-          git push https://x-access-token:${{ secrets.GH_PAT }}@github.com/mym1359/AltCreditScoreAI.git HEAD:master
+          git push https://mym1359:${TOKEN}@github.com/mym1359/AltCreditScoreAI.git HEAD:master
