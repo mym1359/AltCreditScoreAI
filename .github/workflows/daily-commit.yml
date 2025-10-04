@@ -1,21 +1,22 @@
 name: Daily Commit
 
 on:
-  workflow_dispatch:  # ← فعال‌سازی اجرای دستی
+  workflow_dispatch:        # اجرای دستی با دکمه Run
   schedule:
-    - cron: '0 6 * * *'
+    - cron: '0 6 * * *'     # اجرای روزانه ساعت ۶ صبح UTC
 
 jobs:
   commit:
     runs-on: ubuntu-latest
+
     steps:
-      - name: Checkout repo
+      - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Create daily file
+      - name: Create or update daily file
         run: echo "Last updated: $(date)" > daily.txt
 
-      - name: Commit & Push using PAT
+      - name: Auto-commit and push
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
           commit_message: "Daily commit: $(date)"
