@@ -1,9 +1,9 @@
 name: Daily Commit
 
 on:
-  workflow_dispatch:
+  workflow_dispatch:        # ← فعال‌سازی دکمه Run دستی
   schedule:
-    - cron: '0 6 * * *'
+    - cron: '0 6 * * *'     # ← اجرای روزانه ساعت ۶ صبح UTC
 
 jobs:
   commit:
@@ -28,8 +28,5 @@ jobs:
           git commit -m "Daily commit" || echo "No changes to commit"
 
       - name: Push changes using PAT
-        env:
-          GH_PAT: ${{ secrets.GH_PAT }}
         run: |
-          git remote set-url origin https://x-access-token:${GH_PAT}@github.com/mym1359/AltCreditScoreAI.git
-          git push origin HEAD
+          git push https://x-access-token:${{ secrets.GH_PAT }}@github.com/mym1359/AltCreditScoreAI.git HEAD:master
