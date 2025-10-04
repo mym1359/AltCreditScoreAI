@@ -1,9 +1,9 @@
 name: Daily Commit
 
 on:
-  workflow_dispatch:
+  workflow_dispatch:        # ← فعال‌سازی دکمه Run
   schedule:
-    - cron: '0 6 * * *'
+    - cron: '0 6 * * *'     # ← اجرای روزانه ساعت ۶ صبح UTC
 
 jobs:
   commit:
