@@ -13,19 +13,12 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Create daily file
-        run: |
-          echo "Last updated: $(date)" > daily.txt
+        run: echo "Last updated: $(date)" > daily.txt
 
-      - name: Commit changes
-        run: |
-          git config --global user.name "Auto Commit Bot"
-          git config --global user.email "bot@example.com"
-          git add -f daily.txt
-          git commit -m "Daily commit: $(date)" || echo "No changes to commit"
-
-      - name: Push changes using PAT
+      - name: Commit & Push using PAT
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "Daily commit: $(date)"
+          file_pattern: daily.txt
         env:
-          GH_PAT: ${{ secrets.GH_PAT }}
-        run: |
-          git remote set-url origin https://x-access-token:${GH_PAT}@github.com/mym1359/AltCreditScoreAI.git
-          git push origin HEAD
+          GITHUB_TOKEN: ${{ secrets.GH_PAT }}
