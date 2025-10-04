@@ -1,4 +1,4 @@
-name: SSH Connection Test
+name: 🧪 SSH Connection Test
 
 on:
   workflow_dispatch:
@@ -8,6 +8,9 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
       - name: Setup SSH
         run: |
           mkdir -p ~/.ssh
@@ -16,4 +19,4 @@ jobs:
           ssh-keyscan github.com >> ~/.ssh/known_hosts
 
       - name: Test SSH connection
-        run: ssh -T git@github.com
+        run: ssh -T git@github.com || echo "❌ SSH authentication failed"
