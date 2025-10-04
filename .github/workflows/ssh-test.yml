@@ -1,4 +1,4 @@
-name: 🧪 SSH Connection Test
+name: 🧪 SSH Connection Debug
 
 on:
   workflow_dispatch:
@@ -11,6 +11,10 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      - name: Show SSH key length
+        run: |
+          echo "${{ secrets.SSH_KEY }}" | wc -c
+
       - name: Setup SSH
         run: |
           mkdir -p ~/.ssh
@@ -19,4 +23,4 @@ jobs:
           ssh-keyscan github.com >> ~/.ssh/known_hosts
 
       - name: Test SSH connection
-        run: ssh -T git@github.com || echo "❌ SSH authentication failed"
+        run: ssh -T git@github.com
