@@ -1,7 +1,7 @@
 name: Daily Commit
 
 on:
-  workflow_dispatch:        # ← فعال‌سازی دکمه Run
+  workflow_dispatch:        # ← فعال‌سازی دکمه Run دستی
   schedule:
     - cron: '0 6 * * *'     # ← اجرای روزانه ساعت ۶ صبح UTC
 
@@ -14,12 +14,13 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Create or update daily file
-        run: echo "Last updated: $(date)" > daily.txt
+        run: |
+          echo "Last updated: $(date)" > daily.txt
 
       - name: Configure Git
         run: |
-          git config --global user.name "mym1359"
-          git config --global user.email "mym1359@gmail.com"
+          git config --global user.name "Auto Commit Bot"
+          git config --global user.email "bot@example.com"
 
       - name: Commit changes
         run: |
