@@ -14,8 +14,8 @@ jobs:
 
       - name: Configure Git
         run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config user.name "mym1359"
+          git config user.email "mym1359@gmail.com"
 
       - name: Create daily file
         run: |
@@ -28,7 +28,7 @@ jobs:
 
       - name: Push changes
         env:
-          TOKEN: ${{ secrets.PERSONAL_TOKEN }}
+          GH_PAT: ${{ secrets.GH_PAT }}
         run: |
-          git remote set-url origin https://mym1359:${TOKEN}@github.com/mym1359/banking_credit_scoring.git
-          git push origin HEAD:main
+          git remote set-url origin https://x-access-token:${GH_PAT}@github.com/${{ github.repository }}
+          git push
