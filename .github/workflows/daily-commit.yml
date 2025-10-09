@@ -1,41 +1,47 @@
-name: Daily Commit
+name: 🗓️ Daily Natural Commit
 
 on:
-  workflow_dispatch:
   schedule:
-    - cron: '0 6 * * *'
+    - cron: '*/30 * * * *'  # اجرا هر 30 دقیقه
+  workflow_dispatch:
 
 jobs:
-  commit:
+  random-commit:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Create or update daily file
+      - name: Check if already committed today
+        id: check
         run: |
-          echo "Last updated: $(date)" > daily.txt
+          today=$(date -u +'%Y-%m-%d')
+          commits=$(curl -s -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
+            https://api.github.com/repos/${{ github.repository }}/commits?since=${today}T00:00:00Z)
+          if echo "$commits" | grep -q "\"author\":.*\"login\": \"${{ github.actor }}\""; then
+            echo "skip=true" >> $GITHUB_OUTPUT
+          else
+            echo "skip=false" >> $GITHUB_OUTPUT
+          fi
 
-      - name: Configure Git
+      - name: Exit if already committed
+        if: steps.check.outputs.skip == 'true'
+        run: echo "Already committed today. Skipping."
+
+      - name: Checkout repository
+        if: steps.check.outputs.skip == 'false'
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Make subtle change
+        if: steps.check.outputs.skip == 'false'
+        run: |
+          echo "# Update: $(date -u)" >> .github/daily.log
+
+      - name: Commit and push
+        if: steps.check.outputs.skip == 'false'
         run: |
           git config --global user.name "mym1359"
           git config --global user.email "mym1359@gmail.com"
-
-      - name: Setup SSH
-        run: |
-          mkdir -p ~/.ssh
-          echo "${{ secrets.SSH_KEY }}" > ~/.ssh/id_rsa
-          chmod 600 ~/.ssh/id_rsa
-          ssh-keyscan github.com >> ~/.ssh/known_hosts
-
-
-      - name: Commit changes
-        run: |
-          git add -f daily.txt
-          git commit -m "Daily commit" || echo "No changes to commit"
-
-      - name: Push changes via SSH
-        run: |
-          git remote set-url origin git@github.com:mym1359/AltCreditScoreAI.git
-          git push origin HEAD:master
+          git add .github/daily.log
+          git commit -m "📅 Daily update: $(date -u +'%Y-%m-%d %H:%M')"
+          git push
