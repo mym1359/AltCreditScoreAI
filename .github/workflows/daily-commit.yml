@@ -32,10 +32,29 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Make subtle change
+      - name: Generate subtle change
         if: steps.check.outputs.skip == 'false'
         run: |
-          echo "# Update: $(date -u)" >> .github/daily.log
+          mkdir -p .github
+          echo "# Log: $(date -u)" >> .github/daily.log
+
+      - name: Generate natural commit message
+        id: msg
+        if: steps.check.outputs.skip == 'false'
+        run: |
+          messages=("Update minor log entry"
+                    "Refactor: daily timestamp"
+                    "Daily touch-up"
+                    "Minor change for tracking"
+                    "Routine update"
+                    "Log refresh"
+                    "Silent commit"
+                    "Metadata tweak"
+                    "Daily maintenance"
+                    "Background update")
+          RANDOM=$$$(date +%s)
+          msg=${messages[$RANDOM % ${#messages[@]}]}
+          echo "message=$msg" >> $GITHUB_OUTPUT
 
       - name: Commit and push
         if: steps.check.outputs.skip == 'false'
@@ -43,5 +62,5 @@ jobs:
           git config --global user.name "mym1359"
           git config --global user.email "mym1359@gmail.com"
           git add .github/daily.log
-          git commit -m "📅 Daily update: $(date -u +'%Y-%m-%d %H:%M')"
+          git commit -m "${{ steps.msg.outputs.message }}"
           git push
