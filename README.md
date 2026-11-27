@@ -1,43 +1,18 @@
-# 🧠 AltCreditScoreAI
+# نمونهٔ آموزشی امتیازدهی اعتباری جایگزین | Alternative credit scoring prototype
 
-AI-powered credit scoring for individuals without formal banking history. Built for global fintech, migration portfolios, and scalable deployment.
+این پروژه روی دادهٔ نمونه، مراحل پاک‌سازی، ساخت ویژگی و مقایسهٔ رگرسیون لجستیک، XGBoost و LightGBM را نشان می‌دهد.
 
-## 🚀 Features
+This prototype uses example data to demonstrate cleaning, feature engineering, and comparison of logistic regression, XGBoost, and LightGBM.
 
-- ✅ Secure preprocessing and feature engineering
-- ✅ Model training with Logistic Regression, XGBoost, LightGBM
-- ✅ Evaluation with ROC, F1, Precision-Recall, Confusion Matrix
-- ✅ CI/CD pipeline with GitHub Actions (test, lint, security)
-- ✅ Dockerized for isolated execution
+## اجزای قابل بررسی | Reviewable components
 
-## 🐳 Run with Docker
+- [پردازش داده / Data preparation](src/preprocessing)
+- [ساخت ویژگی / Feature engineering](src/feature_engineering)
+- [آموزش و ارزیابی / Training and evaluation](src/models/train_model.py)
+- [آزمون‌ها / Tests](tests)
 
-```bash
-docker build -t altcredit-ai .
-docker run -it altcredit-ai pytest tests/
+آموزش و گزارش معیارها روی دادهٔ نمونه، تمرین فنی مقایسهٔ مدل است. این مخزن شواهد ارزیابی در سطح متقاضی، اثر بر دسترسی به اعتبار یا عملکرد در محیط عملیاتی را گزارش نمی‌کند.
 
-## Getting Started
-```bash
-git clone https://github.com/mym1359/AltCreditScoreAI.git
-cd AltCreditScoreAI
-pip install -r requirements.txtm
- 
+Training and metrics on example data demonstrate a technical model comparison. This repository does not report applicant-level validation, effects on access to credit, or production performance.
 
-License
-MIT
-
-
-## 🧪 مرحله 3: ساخت محیط مجازی و نصب ابزارها
-
-### ✅ دستورها:
-
-```bash
-# ساخت محیط مجازی
-python -m venv venv
-source venv/bin/activate  # در ویندوز: venv\Scripts\activate
-
-# نصب ابزارهای پایه
-pip install pandas numpy scikit-learn xgboost lightgbm matplotlib seaborn loguru pydantic pytest
-
-# ذخیره در requirements.txt
-pip freeze > requirements.txt 
+[پژوهش بازپرداخت وام مسکن / Mortgage repayment research](https://github.com/mym1359/mortgage-repayment-review)
